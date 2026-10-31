@@ -3,7 +3,13 @@
 Model na podstawie zdjęcia, o przyjętych wymiarach **900 × 1100 × 1150 mm**
 (szerokość × głębokość × wysokość). Skala: 1 jednostka Blendera = 1 metr.
 
-![Podgląd modelu fotela](chair/output/perspective.png)
+![Wersja 2 — ujęcie od strony zbliżonej do referencji](chair/output/reference.png)
+
+Wersja 2 ma osobną poduszkę zagłówka, pełniejszy wałek z przodu siedziska,
+marszczone poduszki boczne i mniej wyeksponowaną podstawę. Zgodnie z ustaleniem
+model obejmuje sam fotel, bez koca.
+
+**[Porównanie wersji 1 i 2 z tej samej kamery](chair/review/README.md)**
 
 ## Pobieranie
 
@@ -29,7 +35,7 @@ blender --background --python-exit-code 1 --python validate_model.py -- output
 
 Generator korzysta wyłącznie z bibliotek dostarczanych z Blenderem. Gotowe
 wyniki są zapisane w `chair/output/`, więc pobranie modelu nie wymaga renderowania.
-Weryfikacja obejmuje jednostki, gabaryty, zamknięcie 28 siatek i eksport GLB.
+Weryfikacja obejmuje jednostki, gabaryty, zamknięcie 31 siatek i eksport GLB.
 
 Wymiary są założeniem zaakceptowanym dla modelu, a nie pomiarem oryginału.
 Koc pominięto. Konstrukcja ze sklejki i wykroje CNC wymagają osobnego opracowania.

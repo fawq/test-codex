@@ -2,156 +2,171 @@
   "status": "PASS",
   "blender_version": "4.3.2",
   "blend_dimensions_xyz_m": [
-    0.9000000357627869,
-    1.100000023841858,
+    0.8999999761581421,
+    1.0999999046325684,
     1.149999976158142
   ],
   "glb_dimensions_xyz_m": [
-    0.9000000357627869,
+    0.8999999761581421,
     1.149999976158142,
-    1.100000023841858
+    1.0999999046325684
   ],
-  "closed_meshes_with_positive_volume": 28,
+  "closed_meshes_with_positive_volume": 31,
   "parts": [
     {
       "part": "Shell | continuous seat-back bucket | nominal 22 mm",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 0.03149245926483663
+      "signed_volume_m3": 0.03092565995651073
     },
     {
-      "part": "Shell | rounded perimeter lip",
+      "part": "Left | flat ivory arm ledge",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 0.0010212791820664415
+      "signed_volume_m3": 0.0001991141415228078
     },
     {
-      "part": "Left | rolled ivory arm edge",
+      "part": "Right | flat ivory arm ledge",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 0.00025133950247090495
+      "signed_volume_m3": 0.00019912659103034477
     },
     {
-      "part": "Right | rolled ivory arm edge",
+      "part": "Shell | small perimeter radius",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 0.0002513395362962032
+      "signed_volume_m3": 0.0002537130832003456
     },
     {
-      "part": "Seat | deeply padded basin with waterfall front",
+      "part": "Seat | sunken inner cushion",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 0.05463472711981927
+      "signed_volume_m3": 0.03812838212605578
     },
     {
-      "part": "Back panel | reclined central cushion",
+      "part": "Back panel | full padded back behind loose pillow",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 0.028625510312702405
+      "signed_volume_m3": 0.02887877834793925
     },
     {
-      "part": "Headrest | wide soft pillow",
+      "part": "Seat | inflated rounded front bolster",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 0.01369960838174311
+      "signed_volume_m3": 0.019556268214855756
+    },
+    {
+      "part": "Back | padded top surround",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.006970347877195812
+    },
+    {
+      "part": "Headrest | loose rectangular pillow",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.01124840969478396
     },
     {
       "part": "Left | gathered continuous bolster",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 0.01699572101033274
+      "signed_volume_m3": 0.024416834414000915
     },
     {
       "part": "Right | gathered continuous bolster",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 0.01699474531863124
+      "signed_volume_m3": 0.0244134814014634
     },
     {
       "part": "Shell | recessed fastener",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 2.060737575574324e-07
+      "signed_volume_m3": 1.9769638876361868e-07
     },
     {
       "part": "Shell | recessed fastener.001",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 2.0607443061972088e-07
+      "signed_volume_m3": 1.9769618812918266e-07
     },
     {
       "part": "Shell | recessed fastener.002",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 2.060741728183875e-07
+      "signed_volume_m3": 1.9769664050547826e-07
     },
     {
       "part": "Shell | recessed fastener.003",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 2.0607452446951454e-07
+      "signed_volume_m3": 1.976967419404003e-07
     },
     {
       "part": "Shell | recessed fastener.004",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 2.0607416981595385e-07
+      "signed_volume_m3": 1.9769635477748385e-07
     },
     {
       "part": "Shell | recessed fastener.005",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 2.0607430833803815e-07
+      "signed_volume_m3": 1.9769627035161783e-07
     },
     {
       "part": "Shell | recessed fastener.006",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 2.0607518757883554e-07
+      "signed_volume_m3": 1.97696624141603e-07
     },
     {
       "part": "Shell | recessed fastener.007",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 2.060749132409762e-07
+      "signed_volume_m3": 1.9769536460638956e-07
     },
     {
-      "part": "Seat | deeply padded basin with waterfall front | welt",
+      "part": "Seat | sunken inner cushion | welt",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 4.492578583394173e-05
+      "signed_volume_m3": 4.178429214641984e-05
     },
     {
-      "part": "Back panel | reclined central cushion | welt",
+      "part": "Back panel | full padded back behind loose pillow | welt",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 3.8782269730673265e-05
+      "signed_volume_m3": 4.0619392797808845e-05
     },
     {
-      "part": "Headrest | wide soft pillow | welt",
+      "part": "Seat | inflated rounded front bolster | welt",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 2.727460227630987e-05
+      "signed_volume_m3": 1.2422494616957662e-05
     },
     {
-      "part": "Left | gathered continuous bolster | outer welt",
+      "part": "Back | padded top surround | welt",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 1.7786708291951215e-05
+      "signed_volume_m3": 8.502570209034167e-06
     },
     {
-      "part": "Right | gathered continuous bolster | outer welt",
+      "part": "Headrest | perimeter welt",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 1.7799100996719753e-05
+      "signed_volume_m3": 1.4333908860607269e-05
     },
     {
-      "part": "Base | oval rubber sole",
+      "part": "Left | gathered continuous bolster | welt",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 0.009309234281215264
+      "signed_volume_m3": 1.3597930186511108e-05
     },
     {
-      "part": "Base | ivory lower ring",
+      "part": "Right | gathered continuous bolster | welt",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 0.012111822001310325
+      "signed_volume_m3": 1.3594704597355537e-05
     },
     {
-      "part": "Base | recessed oval plinth",
+      "part": "Base | recessed rubber sole",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 0.03928473515582237
+      "signed_volume_m3": 0.005193976710520286
     },
     {
-      "part": "Base | ivory upper ring",
+      "part": "Base | narrow aged ivory lower rim",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 0.011471823101460124
+      "signed_volume_m3": 0.003979890323994808
     },
     {
-      "part": "Base | swivel column",
+      "part": "Base | dark low oval plinth",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 0.006892758518791359
+      "signed_volume_m3": 0.03674016823853581
     },
     {
-      "part": "Base | upper load plate",
+      "part": "Base | dark upper transition",
       "non_manifold_edges": 0,
-      "signed_volume_m3": 0.003992924729699598
+      "signed_volume_m3": 0.0031129825488251453
+    },
+    {
+      "part": "Base | recessed tapered mount",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.016039887501040476
     }
   ]
 }

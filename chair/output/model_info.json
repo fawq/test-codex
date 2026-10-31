@@ -7,31 +7,40 @@
     "height": 1.15
   },
   "measured_envelope_m": [
-    0.9000000357627869,
-    1.100000023841858,
+    0.8999999761581421,
+    1.0999999046325684,
     1.149999976158142
   ],
   "minimum_m": [
-    -0.45000001788139343,
-    -0.550000011920929,
+    -0.44999998807907104,
+    -0.5499999523162842,
     0.0
   ],
   "maximum_m": [
-    0.45000001788139343,
-    0.550000011920929,
+    0.44999998807907104,
+    0.5499999523162842,
     1.149999976158142
   ],
   "nominal_shell_wall_before_calibration_m": 0.022,
   "envelope_calibration_xyz": [
-    0.980085015296936,
-    1.123158574104309,
-    1.0035383701324463
+    0.9667204022407532,
+    1.097199559211731,
+    0.9991418123245239
   ],
   "shell_wall_estimated_range_m": [
-    0.02156187033653259,
-    0.024709488630294797
+    0.02126784884929657,
+    0.02413839030265808
   ],
-  "mesh_objects": 28,
-  "vertices": 231888,
-  "fabrication_status": "visual concept only; no load calculations, joints, or CNC cut patterns"
+  "mesh_objects": 31,
+  "vertices": 287628,
+  "fabrication_status": "visual concept only; no load calculations, joints, or CNC cut patterns",
+  "revision": 2,
+  "reference_changes": [
+    "separate rectangular head pillow",
+    "inflated front seat roll",
+    "gathered side cushions",
+    "broader upper back",
+    "flat ivory arm ledges",
+    "recessed low pedestal"
+  ]
 }

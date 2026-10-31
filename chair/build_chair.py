@@ -24,6 +24,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
 parser.add_argument("--no-render", action="store_true")
 parser.add_argument("--samples", type=int, default=96)
+parser.add_argument("--resolution", type=int, default=1100)
+parser.add_argument("--views", nargs="+", choices=["perspective", "reference", "front", "side", "rear", "top"],
+                    default=["perspective", "reference", "front", "side", "rear", "top"])
 args = parser.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
 OUT = args.output.resolve()
 OUT.mkdir(parents=True, exist_ok=True)
@@ -81,21 +84,21 @@ def material(name, color, rough=0.5, metallic=0.0, fabric=False):
         bs.inputs["Sheen Weight"].default_value = 0.04
         bs.inputs["Sheen Roughness"].default_value = 0.78
         tex = nodes.new("ShaderNodeTexNoise")
-        tex.inputs["Scale"].default_value = 115
+        tex.inputs["Scale"].default_value = 18
         tex.inputs["Detail"].default_value = 3
         ramp = nodes.new("ShaderNodeValToRGB")
         ramp.color_ramp.elements[0].position = .15
-        ramp.color_ramp.elements[0].color = (*(c * .67 for c in color), 1)
+        ramp.color_ramp.elements[0].color = (*(c * .82 for c in color), 1)
         ramp.color_ramp.elements[1].position = .85
-        ramp.color_ramp.elements[1].color = (*(min(1, c * 1.22) for c in color), 1)
+        ramp.color_ramp.elements[1].color = (*(min(1, c * 1.10) for c in color), 1)
         links.new(tex.outputs["Fac"], ramp.inputs["Fac"])
         links.new(ramp.outputs["Color"], bs.inputs["Base Color"])
         weave = nodes.new("ShaderNodeTexNoise")
         weave.inputs["Scale"].default_value = 520
         weave.inputs["Detail"].default_value = 2
         bump = nodes.new("ShaderNodeBump")
-        bump.inputs["Strength"].default_value = .20
-        bump.inputs["Distance"].default_value = .00022
+        bump.inputs["Strength"].default_value = .15
+        bump.inputs["Distance"].default_value = .00012
         links.new(weave.outputs["Fac"], bump.inputs["Height"])
         links.new(bump.outputs["Normal"], bs.inputs["Normal"])
     else:
@@ -103,14 +106,17 @@ def material(name, color, rough=0.5, metallic=0.0, fabric=False):
     return m
 
 
-ivory = material("Warm ivory | satin shell", (.64, .61, .48), .32)
-rust = material("Burnt sienna | woven velvet", (.22, .018, .002), .84, fabric=True)
-rust_dark = material("Rust | welt cord", (.19, .031, .009), .85, fabric=True)
+ivory = material("Warm ivory | satin shell", (.64, .61, .48), .47)
+rust = material("Burnt sienna | woven velvet", (.27, .038, .006), .82, fabric=True)
+rust_dark = material("Rust | welt cord", (.15, .020, .003), .85, fabric=True)
 thread = material("Ochre | topstitch", (.48, .21, .075), .8)
-dark = material("Charcoal | pedestal", (.025, .031, .029), .32, .65)
+dark = material("Charcoal | pedestal", (.018, .021, .019), .56, .25)
 rubber = material("Black | rubber sole", (.012, .015, .013), .87)
+dark.node_tree.nodes["Principled BSDF"].inputs["Coat Weight"].default_value = 0
+rubber.node_tree.nodes["Principled BSDF"].inputs["Coat Weight"].default_value = 0
 metal = material("Brushed brass | fasteners", (.31, .25, .13), .32, .8)
 floor_mat = material("Studio | warm limestone", (.22, .24, .23), .84)
+floor_mat.node_tree.nodes["Principled BSDF"].inputs["Coat Weight"].default_value = 0
 
 
 def mesh_object(name, verts, faces, mat, col):
@@ -148,15 +154,15 @@ def curve_object(name, paths, radius, mat, col=detail_col, cyclic=False):
 # Centreline loft: s, Y, Z, half-width, lateral rise, lateral Y setback.
 # Continuous bucket surface rather than intersecting rectangular seat/back slabs.
 PROFILE = [
-    (0.00, -.490, .315, .330, .055, .055),
-    (0.10, -.412, .298, .420, .240, .075),
-    (0.27, -.190, .294, .435, .275, .025),
-    (0.43,  .045, .325, .405, .270, -.045),
-    (0.54,  .180, .465, .371, .205, -.068),
-    (0.69,  .286, .728, .354, .126, -.065),
-    (0.85,  .397, .978, .356, .055, -.045),
-    (0.94,  .443, 1.100, .341, -.002, -.035),
-    (1.00,  .460, 1.145, .301, -.030, -.025),
+    (0.00, -.500, .315, .370, .050, .130),
+    (0.10, -.425, .298, .433, .240, .090),
+    (0.27, -.180, .285, .440, .275, .025),
+    (0.43,  .045, .310, .410, .275, -.045),
+    (0.54,  .175, .450, .375, .205, -.068),
+    (0.69,  .280, .720, .375, .130, -.065),
+    (0.85,  .385, .970, .375, .065, -.045),
+    (0.94,  .430, 1.100, .369, -.005, -.035),
+    (1.00,  .450, 1.145, .340, -.035, -.025),
 ]
 
 
@@ -204,7 +210,7 @@ sol.thickness = SHELL_THICKNESS
 sol.offset = -1
 sol.use_even_offset = False
 bev = shell.modifiers.new("Soft manufactured edges", "BEVEL")
-bev.width = .007
+bev.width = .003
 bev.segments = 3
 shell["purpose"] = "Visual structural envelope; not an engineered plywood laminate"
 
@@ -213,7 +219,7 @@ rim = ([surface(0, -1+2*i/90) for i in range(91)] +
        [surface(i/140, 1) for i in range(1, 141)] +
        [surface(1, 1-2*i/90) for i in range(1, 91)] +
        [surface(1-i/140, -1) for i in range(1, 140)])
-curve_object("Shell | rounded perimeter lip", [rim], .009, ivory, shell_col, True)
+curve_object("Shell | small perimeter radius", [rim], .0045, ivory, shell_col, True)
 
 
 def padded_patch(name, s0, s1, v0, v1, loft, seed, nu=68, nv=54):
@@ -232,17 +238,16 @@ def padded_patch(name, s0, s1, v0, v1, loft, seed, nu=68, nv=54):
             # Soft bunching from the sewn perimeter, gently irregular and symmetric.
             edge = min(t, 1-t, r, 1-r)
             waves = (math.sin(74*t+13*r+seed) + .4*math.sin(143*t-21*r+seed*2))
-            h += .0045 * math.exp(-edge/.105) * math.sin(math.pi*min(edge/.08, 1)) * waves
-            if "Headrest" in name:
-                h += .0045 * math.exp(-min(r,1-r)/.13) * math.sin(113*t+16*r) * math.sin(math.pi*t)
+            h += .007 * math.exp(-edge/.13) * math.sin(math.pi*min(edge/.08, 1)) * waves
             # Centre back has two softly pulled channels, not hard sculpted grooves.
             if "Back panel" in name:
                 fade = math.sin(math.pi*t)**.7
                 for rr in [.32, .68]:
-                    h -= .009*math.exp(-((r-rr)/.032)**2)*fade
+                    h -= .006*math.exp(-((r-rr)/.055)**2)*fade
+                h += .007*math.sin(31*r+5*t)*math.sin(math.pi*r)*math.sin(math.pi*t)
             if "Seat" in name:
-                h -= .019*math.exp(-((t-.65)/.3)**2-((r-.5)/.30)**2)
-                h += .035*math.exp(-((t-.21)/.17)**2)*math.sin(math.pi*r)**.5
+                h -= .040*math.exp(-((t-.58)/.33)**2-((r-.5)/.30)**2)
+                h += .008*math.sin(27*r+5*t)*math.sin(math.pi*r)*math.sin(math.pi*t)
         return surface(s, v)+n*h
 
     verts = [position(i/nu, j/nv, back) for back in [False, True]
@@ -273,20 +278,120 @@ def padded_patch(name, s0, s1, v0, v1, loft, seed, nu=68, nv=54):
 
 
 # Broad central cushion and continuous side bolsters follow the same shell loft.
-padded_patch("Seat | deeply padded basin with waterfall front", .012, .535, -.87, .87, .128, 1)
-padded_patch("Back panel | reclined central cushion", .50, .875, -.65, .65, .094, 3)
-padded_patch("Headrest | wide soft pillow", .81, .977, -.78, .78, .125, 6)
+padded_patch("Seat | sunken inner cushion", .090, .545, -.81, .81, .118, 1)
+padded_patch("Back panel | full padded back behind loose pillow", .50, .947, -.67, .67, .077, 3)
+
+
+def swept_cushion(name, frame, width_fn, depth_fn, seed, ns=176, na=40, seam_angle=0):
+    """Closed elliptical sweep; geometry gathers toward its sewn outer edge."""
+    def point(t,a):
+        p,n,u=frame(t)
+        end=min(1,t/.055,(1-t)/.055)
+        taper=math.sin(end*math.pi/2)
+        edge=(.55+.45*abs(math.cos(a)))
+        gather=.009*(math.sin(102*t+3*math.sin(a)+seed)+.32*math.sin(171*t-5*a+seed))
+        gather*=edge*math.sin(math.pi*t)**.4
+        # Compression at the hidden underside stays subtle; visible skin carries folds.
+        gather*=.15+.85*max(0,math.sin(a))
+        depth=depth_fn(t)+gather
+        return p+u*(width_fn(t)*taper*math.cos(a))+n*(depth*taper*math.sin(a))
+    vs=[frame(0)[0]]
+    for i in range(1,ns):
+        vs.extend(point(i/ns,2*math.pi*j/na) for j in range(na))
+    vs.append(frame(1)[0])
+    fs=[(0,1+(j+1)%na,1+j) for j in range(na)]
+    for i in range(ns-2):
+        start=1+i*na
+        fs.extend((start+j,start+(j+1)%na,start+na+(j+1)%na,start+na+j) for j in range(na))
+    end,start=len(vs)-1,1+(ns-2)*na
+    fs.extend((end,start+j,start+(j+1)%na) for j in range(na))
+    ob=mesh_object(name,vs,fs,rust,pad_col)
+    sub=ob.modifiers.new("Soft upholstered section",'SUBSURF')
+    sub.levels=sub.render_levels=1
+    seam=[point(i/ns,seam_angle) for i in range(1,ns)]
+    curve_object(name+" | welt",[seam],.0020,rust_dark)
+    return ob
+
+
+def front_roll_frame(t):
+    x=.742*(t-.5)
+    f=x/.371
+    p=Vector((x,-.438+.125*f*f,.420+.081*f*f))
+    tangent=Vector((1,.250*x/(.371**2),.162*x/(.371**2))).normalized()
+    n=Vector((0,0,1))
+    n=(n-tangent*n.dot(tangent)).normalized()
+    u=tangent.cross(n).normalized()
+    return p,n,u
+
+
+swept_cushion("Seat | inflated rounded front bolster", front_roll_frame,
+              lambda t:.087+.008*math.sin(math.pi*t),
+              lambda t:.079+.008*math.sin(math.pi*t),2,ns=144,seam_angle=-.70)
+
+
+def top_roll_frame(t):
+    v=-.68+1.36*t
+    n=normal(.921,v)
+    p=surface(.921,v)+n*.048
+    tang=(surface(.921,min(.69,v+.001))-surface(.921,max(-.69,v-.001))).normalized()
+    n=(n-tang*n.dot(tang)).normalized()
+    return p,n,tang.cross(n).normalized()
+
+
+swept_cushion("Back | padded top surround",top_roll_frame,
+              lambda t:.052,lambda t:.066,5,ns=112,seam_angle=math.pi)
+
+
+def loose_head_pillow():
+    """A separate rounded rectangular pillow, suspended in front of the back pad."""
+    s=.815
+    n=normal(s,0)
+    up=(surface(s+.001,0)-surface(s-.001,0)).normalized()
+    across=Vector((1,0,0))
+    origin=surface(s,0)+n*.123
+    nu,nv=48,88
+    def point(t,r,back=False):
+        u,v=2*r-1,2*t-1
+        x=.285*u*math.sqrt(1-.16*v*v)
+        z=.106*v*math.sqrt(1-.30*u*u)
+        arch=max(0,(1-u*u)*(1-v*v))**.38
+        if back:
+            h=-.014-.025*arch
+        else:
+            h=.015+.073*arch
+            edge=min(r,1-r)
+            pull=math.exp(-edge/.16)*math.sin(math.pi*min(edge/.07,1))
+            h+=.009*pull*math.sin(59*t+9*r+2*math.sin(17*t))
+            h+=.003*math.sin(17*r+3*t)*math.sin(math.pi*r)*math.sin(math.pi*t)
+        return origin+across*x+up*z+n*h
+    vs=[point(i/nu,j/nv,back) for back in [False,True] for i in range(nu+1) for j in range(nv+1)]
+    count=(nu+1)*(nv+1)
+    fs=grid_faces(nu,nv)
+    fs += [tuple(count+k for k in reversed(face)) for face in grid_faces(nu,nv)]
+    boundary=list(range(nv+1))+[i*(nv+1)+nv for i in range(1,nu+1)]
+    boundary += [nu*(nv+1)+j for j in range(nv-1,-1,-1)]+[i*(nv+1) for i in range(nu-1,0,-1)]
+    for k,a in enumerate(boundary):
+        b=boundary[(k+1)%len(boundary)]
+        fs.append((b,a,a+count,b+count))
+    ob=mesh_object("Headrest | loose rectangular pillow",vs,fs,rust,pad_col)
+    sub=ob.modifiers.new("Rounded pillow corners",'SUBSURF')
+    sub.levels=sub.render_levels=1
+    curve_object("Headrest | perimeter welt",[[vs[k] for k in boundary]],.0018,rust_dark,cyclic=True)
+    ob["reference_feature"]="Separate full pillow below the padded top surround"
+
+
+loose_head_pillow()
 
 
 def bolster(side):
     """Plump, closed swept cushion with elliptical sections and softly gathered skin."""
-    ns, na = 176, 40
+    ns, na = 192, 40
     def frame(t):
         def centre(t):
-            s = .09+.862*t
-            v = side*(.80-.18*min(1,t/.65))
+            s = .075+.864*t
+            v = side*(.81-.22*min(1,t/.65))
             n = normal(s,v)
-            return surface(s,v)+n*.060,n
+            return surface(s,v)+n*.067,n
         p,n = centre(t)
         a, b = max(0,t-.0001), min(1,t+.0001)
         pa,pb = centre(a)[0],centre(b)[0]
@@ -294,46 +399,36 @@ def bolster(side):
         n = (n-tang*n.dot(tang)).normalized()
         u = tang.cross(n).normalized()
         return p,n,u
-    def point(t,a):
-        p,n,u = frame(t)
-        end = min(1,t/.065,(1-t)/.065)
-        taper = math.sin(end*math.pi/2)
-        width = .059+.010*math.sin(math.pi*t)
-        depth = .063+.010*math.sin(math.pi*t)
-        gather = .0035*(math.sin(111*t+2*math.sin(a))+.30*math.sin(183*t-4*a))
-        gather *= math.sin(a)**2 * math.sin(math.pi*t)**.4
-        return p+u*(width*taper*math.cos(a))+n*((depth+gather)*taper*math.sin(a))
-    vs = [frame(0)[0]]
-    for i in range(1,ns):
-        for j in range(na):
-            vs.append(point(i/ns,2*math.pi*j/na))
-    vs.append(frame(1)[0])
-    fs=[]
-    for j in range(na):
-        fs.append((0,1+(j+1)%na,1+j))
-    for i in range(ns-2):
-        start=1+i*na
-        for j in range(na):
-            fs.append((start+j,start+(j+1)%na,start+na+(j+1)%na,start+na+j))
-    end=len(vs)-1
-    start=1+(ns-2)*na
-    for j in range(na):
-        fs.append((end,start+j,start+(j+1)%na))
     name=("Left" if side<0 else "Right")+" | gathered continuous bolster"
-    ob=mesh_object(name,vs,fs,rust,pad_col)
-    sub=ob.modifiers.new("Rounded gathered cushion",'SUBSURF')
-    sub.levels=sub.render_levels=1
-    seam=[point(i/ns,0 if side>0 else math.pi) for i in range(1,ns)]
-    curve_object(name+" | outer welt",[seam],.0022,rust_dark)
+    return swept_cushion(name,frame,
+                         lambda t:.071+.014*math.sin(math.pi*t),
+                         lambda t:.075+.013*math.sin(math.pi*t),
+                         2 if side<0 else 4,ns=ns,na=na,seam_angle=0 if side>0 else math.pi)
 
 
 bolster(-1)
 bolster(1)
 
-# Narrow ivory arm caps integrated with the outer shell; under-arm shadow joints.
+# Flat ivory arm ledges instead of a second tubular trim around the opening.
 for side in [-1, 1]:
-    points = [surface(.135+.29*i/65, side)+normal(.135+.29*i/65, side)*.002 for i in range(66)]
-    curve_object(("Left" if side<0 else "Right")+" | rolled ivory arm edge", [points], .016, ivory, shell_col)
+    vs=[]
+    for i in range(61):
+        t=i/60
+        p=surface(.115+.31*t,side)
+        width=.036*(.55+.45*math.sin(math.pi*t))
+        for j in range(5):
+            r=j/4
+            vs.append(p+Vector((side*(-width+(width+.008)*r),0,.006)))
+    faces=grid_faces(60,4)
+    if side<0:
+        faces=[tuple(reversed(face)) for face in faces]
+    ob=mesh_object(("Left" if side<0 else "Right")+" | flat ivory arm ledge",vs,faces,ivory,shell_col)
+    sol=ob.modifiers.new("Arm ledge thickness",'SOLIDIFY')
+    sol.thickness=.016
+    sol.offset=-1
+    be=ob.modifiers.new("Rounded ledge edges",'BEVEL')
+    be.width=.006
+    be.segments=3
 
 
 def cylinder(name, radius, depth, loc, mat, col, scale=(1,1,1), bevel=.005):
@@ -352,12 +447,26 @@ def cylinder(name, radius, depth, loc, mat, col, scale=(1,1,1), bevel=.005):
 
 
 # Low, set-back oval pedestal visible beneath the floating bucket in the image.
-cylinder("Base | oval rubber sole", .315, .022, (0,.075,.019), rubber, base_col, (1,1.24,1), .008)
-cylinder("Base | ivory lower ring", .325, .027, (0,.075,.043), ivory, base_col, (1,1.24,1), .011)
-cylinder("Base | recessed oval plinth", .297, .104, (0,.075,.105), dark, base_col, (1,1.24,1), .012)
-cylinder("Base | ivory upper ring", .316, .027, (0,.075,.169), ivory, base_col, (1,1.24,1), .010)
-cylinder("Base | swivel column", .127, .124, (0,.110,.226), dark, base_col, (1,1,1), .010)
-cylinder("Base | upper load plate", .215, .023, (0,.110,.284), dark, base_col, (1,1.1,1), .009)
+cylinder("Base | recessed rubber sole", .272, .017, (0,.11,.013), rubber, base_col, (1,1.25,1), .006)
+cylinder("Base | narrow aged ivory lower rim", .283, .012, (0,.11,.028), ivory, base_col, (1,1.25,1), .004)
+cylinder("Base | dark low oval plinth", .274, .118, (0,.11,.091), dark, base_col, (1,1.25,1), .010)
+cylinder("Base | dark upper transition", .274, .010, (0,.11,.151), dark, base_col, (1,1.25,1), .003)
+# Recessed, tapered mount: the reference shows a low plinth, not a second drum.
+profile_mount=[(.145,.235),(.162,.230),(.187,.190),(.222,.139),(.250,.116),(.285,.113)]
+vs=[]
+for z,radius in profile_mount:
+    for j in range(96):
+        a=2*math.pi*j/96
+        vs.append((radius*math.cos(a),.105+1.24*radius*math.sin(a),z))
+fs=[]
+for i in range(len(profile_mount)-1):
+    for j in range(96):
+        fs.append((i*96+j,i*96+(j+1)%96,(i+1)*96+(j+1)%96,(i+1)*96+j))
+fs += [tuple(reversed(range(96))),tuple((len(profile_mount)-1)*96+j for j in range(96))]
+mount=mesh_object("Base | recessed tapered mount",vs,fs,dark,base_col)
+be=mount.modifiers.new("Soft mounting transitions",'BEVEL')
+be.width,be.segments=.006,3
+mount.modifiers.new("Mount weighted normals",'WEIGHTED_NORMAL')
 
 # Subtle exterior fasteners, placed on the true shell surface.
 for side in [-1,1]:
@@ -468,6 +577,7 @@ def camera(name, loc, target, ortho=None, lens=52):
 
 
 hero = camera("Camera | three-quarter", (1.85,-2.5,1.65), (0,.015,.59), lens=57)
+reference = camera("Camera | reference-facing left three-quarter", (-1.10,-3.05,1.65), (0,0,.59), lens=59)
 front = camera("Camera | front orthographic", (0,-4,.575), (0,0,.575), 1.50)
 side = camera("Camera | right orthographic", (4,0,.575), (0,0,.575), 1.50)
 rear = camera("Camera | rear three-quarter", (-1.9,2.3,1.6), (0,0,.59), lens=57)
@@ -478,8 +588,8 @@ scene.cycles.samples = args.samples
 # Some Linux Blender packages omit OpenImageDenoise. Sampling works on all builds.
 scene.cycles.use_denoising = False
 scene.cycles.max_bounces = 6
-scene.render.resolution_x = 1100
-scene.render.resolution_y = 1100
+scene.render.resolution_x = args.resolution
+scene.render.resolution_y = args.resolution
 scene.render.resolution_percentage = 100
 scene.render.image_settings.file_format = "PNG"
 scene.view_settings.view_transform = "AgX"
@@ -512,6 +622,8 @@ stats = {
     "mesh_objects": len(chair_objects()),
     "vertices": sum(len(o.data.vertices) for o in chair_objects()),
     "fabrication_status": "visual concept only; no load calculations, joints, or CNC cut patterns",
+    "revision": 2,
+    "reference_changes": ["separate rectangular head pillow", "inflated front seat roll", "gathered side cushions", "broader upper back", "flat ivory arm ledges", "recessed low pedestal"],
 }
 (OUT/"model_info.json").write_text(json.dumps(stats, indent=2), encoding="utf-8")
 readme = bpy.data.texts.new("READ ME | metric photo reconstruction")
@@ -535,7 +647,9 @@ bpy.context.preferences.filepaths.save_version = 0
 bpy.ops.wm.save_as_mainfile(filepath=str(OUT/"chair.blend"), compress=True)
 
 if not args.no_render:
-    for cam, filename in [(hero,"perspective"),(front,"front"),(side,"side"),(rear,"rear"),(top,"top")]:
+    cameras={"perspective":hero,"reference":reference,"front":front,"side":side,"rear":rear,"top":top}
+    for filename in args.views:
+        cam=cameras[filename]
         scene.camera = cam
         scene.render.filepath = str(OUT/(filename+".png"))
         bpy.ops.render.render(write_still=True)
@@ -543,6 +657,7 @@ if not args.no_render:
     scene.render.filepath = str(OUT/"perspective.png")
     bpy.ops.wm.save_as_mainfile(filepath=str(OUT/"chair.blend"), compress=True)
 
+if not args.no_render and {"front","side","top"}.issubset(args.views):
     # A vector dimension sheet, with actual orthographic renders embedded.
     # Sheet is fitted to a page; the model itself, not the page, is at 1:1 scale.
     svg = ['<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="850" viewBox="0 0 1800 850">',
