@@ -1,0 +1,157 @@
+{
+  "status": "PASS",
+  "blender_version": "4.3.2",
+  "blend_dimensions_xyz_m": [
+    0.9000000357627869,
+    1.100000023841858,
+    1.149999976158142
+  ],
+  "glb_dimensions_xyz_m": [
+    0.9000000357627869,
+    1.149999976158142,
+    1.100000023841858
+  ],
+  "closed_meshes_with_positive_volume": 28,
+  "parts": [
+    {
+      "part": "Shell | continuous seat-back bucket | nominal 22 mm",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.03149245926483663
+    },
+    {
+      "part": "Shell | rounded perimeter lip",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.0010212791820664415
+    },
+    {
+      "part": "Left | rolled ivory arm edge",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.00025133950247090495
+    },
+    {
+      "part": "Right | rolled ivory arm edge",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.0002513395362962032
+    },
+    {
+      "part": "Seat | deeply padded basin with waterfall front",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.05463472711981927
+    },
+    {
+      "part": "Back panel | reclined central cushion",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.028625510312702405
+    },
+    {
+      "part": "Headrest | wide soft pillow",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.01369960838174311
+    },
+    {
+      "part": "Left | gathered continuous bolster",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.01699572101033274
+    },
+    {
+      "part": "Right | gathered continuous bolster",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.01699474531863124
+    },
+    {
+      "part": "Shell | recessed fastener",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 2.060737575574324e-07
+    },
+    {
+      "part": "Shell | recessed fastener.001",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 2.0607443061972088e-07
+    },
+    {
+      "part": "Shell | recessed fastener.002",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 2.060741728183875e-07
+    },
+    {
+      "part": "Shell | recessed fastener.003",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 2.0607452446951454e-07
+    },
+    {
+      "part": "Shell | recessed fastener.004",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 2.0607416981595385e-07
+    },
+    {
+      "part": "Shell | recessed fastener.005",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 2.0607430833803815e-07
+    },
+    {
+      "part": "Shell | recessed fastener.006",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 2.0607518757883554e-07
+    },
+    {
+      "part": "Shell | recessed fastener.007",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 2.060749132409762e-07
+    },
+    {
+      "part": "Seat | deeply padded basin with waterfall front | welt",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 4.492578583394173e-05
+    },
+    {
+      "part": "Back panel | reclined central cushion | welt",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 3.8782269730673265e-05
+    },
+    {
+      "part": "Headrest | wide soft pillow | welt",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 2.727460227630987e-05
+    },
+    {
+      "part": "Left | gathered continuous bolster | outer welt",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 1.7786708291951215e-05
+    },
+    {
+      "part": "Right | gathered continuous bolster | outer welt",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 1.7799100996719753e-05
+    },
+    {
+      "part": "Base | oval rubber sole",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.009309234281215264
+    },
+    {
+      "part": "Base | ivory lower ring",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.012111822001310325
+    },
+    {
+      "part": "Base | recessed oval plinth",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.03928473515582237
+    },
+    {
+      "part": "Base | ivory upper ring",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.011471823101460124
+    },
+    {
+      "part": "Base | swivel column",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.006892758518791359
+    },
+    {
+      "part": "Base | upper load plate",
+      "non_manifold_edges": 0,
+      "signed_volume_m3": 0.003992924729699598
+    }
+  ]
+}

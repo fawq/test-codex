@@ -1,0 +1,37 @@
+{
+  "units": "metres; 1 Blender unit = 1 m",
+  "dimension_basis": "assumed from one perspective image",
+  "target_dimensions_m": {
+    "width": 0.9,
+    "depth": 1.1,
+    "height": 1.15
+  },
+  "measured_envelope_m": [
+    0.9000000357627869,
+    1.100000023841858,
+    1.149999976158142
+  ],
+  "minimum_m": [
+    -0.45000001788139343,
+    -0.550000011920929,
+    0.0
+  ],
+  "maximum_m": [
+    0.45000001788139343,
+    0.550000011920929,
+    1.149999976158142
+  ],
+  "nominal_shell_wall_before_calibration_m": 0.022,
+  "envelope_calibration_xyz": [
+    0.980085015296936,
+    1.123158574104309,
+    1.0035383701324463
+  ],
+  "shell_wall_estimated_range_m": [
+    0.02156187033653259,
+    0.024709488630294797
+  ],
+  "mesh_objects": 28,
+  "vertices": 231888,
+  "fabrication_status": "visual concept only; no load calculations, joints, or CNC cut patterns"
+}
