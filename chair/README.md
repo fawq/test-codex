@@ -20,6 +20,10 @@ To zaakceptowane wymiary modelu, a nie pomiar oryginalnego fotela. Jedno zdjęci
 bez znanego wymiaru nie pozwala odtworzyć dokładnej geometrii ani rzeczywistej skali
 przedmiotu. Model jest pełnowymiarowy względem tych założeń.
 
+[Kontrola dopasowania do osoby około 200 cm](ergonomics/README.md) zawiera pomiary
+gotowej geometrii. Wersja 2 nie była dobierana do tego wzrostu; przed dopasowaniem
+należy zweryfikować zwłaszcza wysokość zagłówka, profil siedziska i miejsce na barki.
+
 - 1 jednostka Blendera = 1 metr; scena używa jednostek metrycznych.
 - X: szerokość, −Y: przód, +Z: góra; podłoga na Z=0.
 - Wszystkie siatki mają zastosowaną skalę `(1, 1, 1)`.
@@ -30,7 +34,7 @@ przedmiotu. Model jest pełnowymiarowy względem tych założeń.
 
 | Plik | Zawartość |
 | --- | --- |
-| `output/chair.blend` | Gotowy model, materiały proceduralne, studio i pięć kamer |
+| `output/chair.blend` | Gotowy model, materiały proceduralne, studio i sześć kamer |
 | `output/chair.glb` | Sam fotel, bez kamer, świateł i podłogi; przenośny format 3D |
 | `output/perspective.png` | Render z przodu pod kątem |
 | `output/reference.png` | Dodatkowe ujęcie od strony zbliżonej do referencji |

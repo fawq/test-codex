@@ -1,0 +1,85 @@
+{
+  "model": "chair/output/chair.blend; revision 2",
+  "model_sha256": "758528e6c6bdeb49dcc96f9c150edbfc23f58dbdb4d30d3f5b1e7a5b0b264d2d",
+  "side_render_sha256": "23671a3ea033a332b897dd4d309097d812334b411794370d3e8033631324f678",
+  "units": "metres; angles degrees",
+  "status": "geometric audit only; no comfort, load or medical validation",
+  "definitions": {
+    "seat_center": "vertical top-surface ray at X=0 and midpoint of inner cushion Y bounds",
+    "seat_clear_width": "between side bolsters at seat-centre Y and 65 mm above uncompressed centre surface",
+    "seat_clear_depth": "horizontal gap from inside of front roll to back panel, 50 mm above uncompressed seat centre",
+    "headrest_center": "midpoint of loose pillow Z bounds, front surface at X=0",
+    "back_tilt": "front back-panel surface at Z=650 and 850 mm, measured from vertical"
+  },
+  "measurements": {
+    "seat_center_xyz_m": [
+      0.0,
+      -0.10861629247665405,
+      0.3752814531326294
+    ],
+    "uncompressed_seat_center_height_m": 0.3752814531326294,
+    "seat_width_probe_z_m": 0.4402814531326294,
+    "seat_clear_width_m": 0.5147295296192169,
+    "seat_depth_probe_z_m": 0.4252814531326294,
+    "seat_clear_depth_m": 0.5073442459106445,
+    "front_roll_top_height_m": 0.5569359660148621,
+    "front_roll_top_on_centerline_m": 0.4981735944747925,
+    "headrest_center_xyz_m": [
+      0.0,
+      0.20896697044372559,
+      0.9625230431556702
+    ],
+    "headrest_bottom_height_m": 0.8564403057098389,
+    "headrest_top_height_m": 1.0686057806015015,
+    "headrest_center_above_seat_m": 0.5872415900230408,
+    "back_tilt_from_vertical_deg": 21.003478360175254,
+    "back_width_probes": [
+      {
+        "z_m": 0.75,
+        "y_m": 0.2326439380645752,
+        "gap_m": 0.3697986304759979
+      },
+      {
+        "z_m": 0.85,
+        "y_m": 0.27530465126037595,
+        "gap_m": 0.37833239138126373
+      },
+      {
+        "z_m": 0.95,
+        "y_m": 0.32587013244628904,
+        "gap_m": 0.39127515256404877
+      }
+    ]
+  },
+  "illustrative_person": {
+    "stature_m": 2.0,
+    "segment_assumptions_m": {
+      "sole_to_ankle": 0.06,
+      "lower_leg": 0.5,
+      "thigh": 0.51,
+      "hip_to_neck": 0.69,
+      "neck_to_crown": 0.24
+    },
+    "not_measured_from_author": true,
+    "hip_xyz_m": [
+      0.0,
+      0.08914284408092499,
+      0.45028144121170044
+    ],
+    "head_center_xyz_m": [
+      0.0,
+      0.3794667720794678,
+      1.2064639329910278
+    ],
+    "crown_xyz_m": [
+      0.0,
+      0.42247772216796875,
+      1.318490982055664
+    ],
+    "head_center_minus_pillow_center_height_m": 0.24394088983535767
+  },
+  "reference_repository": {
+    "url": "https://github.com/zurekpiotr/Fotel",
+    "inspection": "private, confirmed by user; Git HTTP 403, public page HTTP 404, existing GitHub CLI API request Forbidden; contents not read and author dimensions unknown"
+  }
+}

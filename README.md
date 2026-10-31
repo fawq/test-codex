@@ -11,6 +11,10 @@ model obejmuje sam fotel, bez koca.
 
 **[Porównanie wersji 1 i 2 z tej samej kamery](chair/review/README.md)**
 
+**[Kontrola dopasowania do osoby 200 cm](chair/ergonomics/README.md)** — pomiary
+przestrzeni między poduszkami i położenia zagłówka. Wymiary V2 były założeniem
+wizualnym; model nie jest jeszcze dopasowany do konkretnego użytkownika.
+
 ## Pobieranie
 
 - **[Pobierz całe repozytorium jako ZIP](https://github.com/fawq/test-codex/archive/refs/heads/main.zip)** — zawiera kod, gotowe modele i rendery.
